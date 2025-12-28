@@ -1,0 +1,67 @@
+import React, { useState } from "react";
+
+export default function TaskDashboard() {
+  const [task, setTask] = useState("");
+  const [tasks, setTasks] = useState([]);
+
+  const addTask = (e) => {
+    e.preventDefault();
+    if (!task.trim()) return;
+
+    setTasks((prev) => [...prev, { id: Date.now(), title: task }]);
+    setTask("");
+  };
+
+  const removeTask = (id) => {
+    setTasks((prev) => prev.filter((t) => t.id !== id));
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md">
+        <h1 className="text-2xl font-bold text-center mb-4">
+          ✅ Task List Dashboard
+        </h1>
+
+        {/* Add Task Form */}
+        <form onSubmit={addTask} className="flex gap-2 mb-4">
+          <input
+            type="text"
+            placeholder="Enter a new task"
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+            className="flex-1 border rounded p-2"
+          />
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-4 rounded hover:bg-blue-700"
+          >
+            Add
+          </button>
+        </form>
+
+        {/* Task List */}
+        {tasks.length === 0 ? (
+          <p className="text-gray-500 text-center">No tasks added yet.</p>
+        ) : (
+          <ul className="space-y-2">
+            {tasks.map((item) => (
+              <li
+                key={item.id}
+                className="flex justify-between items-center border rounded p-2"
+              >
+                <span>{item.title}</span>
+                <button
+                  onClick={() => removeTask(item.id)}
+                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
