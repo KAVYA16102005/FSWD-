@@ -1,1 +1,125 @@
+import React, { useState } from "react";
+
+const questionsData = [
+  {
+    question: "What does HTML stand for?",
+    options: [
+      "Hyper Text Markup Language",
+      "High Text Machine Language",
+      "Hyperlinks and Text Markup Language",
+      "Home Tool Markup Language",
+    ],
+    answer: 0,
+  },
+  {
+    question: "Which hook is used to manage state in React?",
+    options: ["useEffect", "useContext", "useState", "useRef"],
+    answer: 2,
+  },
+  {
+    question: "Which company developed React?",
+    options: ["Google", "Microsoft", "Facebook", "Amazon"],
+    answer: 2,
+  },
+];
+
+export default function QuizApp() {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [showResult, setShowResult] = useState(false);
+
+  const handleOptionClick = (index) => {
+    setSelectedOption(index);
+
+    if (index === questionsData[currentQuestion].answer) {
+      setScore((prev) => prev + 1);
+    }
+  };
+
+  const handleNext = () => {
+    setSelectedOption(null);
+
+    if (currentQuestion + 1 < questionsData.length) {
+      setCurrentQuestion((prev) => prev + 1);
+    } else {
+      setShowResult(true);
+    }
+  };
+
+  const restartQuiz = () => {
+    setCurrentQuestion(0);
+    setScore(0);
+    setSelectedOption(null);
+    setShowResult(false);
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <div className="bg-white rounded-2xl shadow-lg p-6 max-w-md w-full">
+        <h1 className="text-2xl font-bold text-center mb-4">Mini Online Quiz</h1>
+
+        {!showResult ? (
+          <>
+            <div className="mb-4">
+              <p className="text-sm text-gray-500">
+                Question {currentQuestion + 1} of {questionsData.length}
+              </p>
+              <h2 className="text-lg font-semibold mt-2">
+                {questionsData[currentQuestion].question}
+              </h2>
+            </div>
+
+            <div className="space-y-2">
+              {questionsData[currentQuestion].options.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleOptionClick(index)}
+                  disabled={selectedOption !== null}
+                  className={`w-full text-left px-4 py-2 rounded-lg border transition
+                    ${
+                      selectedOption === index
+                        ? index === questionsData[currentQuestion].answer
+                          ? "bg-green-200 border-green-500"
+                          : "bg-red-200 border-red-500"
+                        : "hover:bg-gray-100"
+                    }`}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex justify-between items-center mt-4">
+              <p className="font-medium">Score: {score}</p>
+              <button
+                onClick={handleNext}
+                disabled={selectedOption === null}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg disabled:opacity-50"
+              >
+                {currentQuestion + 1 === questionsData.length
+                  ? "Finish"
+                  : "Next"}
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="text-center">
+            <h2 className="text-xl font-bold mb-2">Quiz Completed 🎉</h2>
+            <p className="text-lg mb-4">
+              Your Score: {score} / {questionsData.length}
+            </p>
+            <button
+              onClick={restartQuiz}
+              className="bg-green-600 text-white px-6 py-2 rounded-lg"
+            >
+              Restart Quiz
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 
