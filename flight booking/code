@@ -1,0 +1,62 @@
+import React from "react";
+
+export default function FlightBooking() {
+  const bookTicket = () => {
+    const name = prompt("Enter your name:");
+    if (!name) {
+      alert("Booking cancelled!");
+      return;
+    }
+
+    const from = prompt("Enter departure city:");
+    const to = prompt("Enter destination city:");
+    const date = prompt("Enter travel date (DD/MM/YYYY):");
+    const tickets = prompt("Enter number of tickets:");
+
+    if (!from || !to || !date || !tickets) {
+      alert("All fields are required!");
+      return;
+    }
+
+    const confirmBooking = confirm(
+      `Please confirm your booking:\n\n` +
+        `Name: ${name}\n` +
+        `From: ${from}\n` +
+        `To: ${to}\n` +
+        `Date: ${date}\n` +
+        `Tickets: ${tickets}\n\n` +
+        `Do you want to confirm the booking?`
+    );
+
+    if (confirmBooking) {
+      alert(
+        `✅ Booking Successful!\n\n` +
+          `Passenger: ${name}\n` +
+          `Route: ${from} → ${to}\n` +
+          `Date: ${date}\n` +
+          `Tickets: ${tickets}\n\n` +
+          `Have a safe journey!`
+      );
+    } else {
+      alert("❌ Booking cancelled by user.");
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-6 rounded-xl shadow-md text-center">
+        <h1 className="text-2xl font-bold mb-4">✈️ Flight Ticket Booking</h1>
+        <p className="mb-4 text-gray-600">
+          Click the button below to book your flight using dialog boxes.
+        </p>
+
+        <button
+          onClick={bookTicket}
+          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+        >
+          Book Flight
+        </button>
+      </div>
+    </div>
+  );
+}
