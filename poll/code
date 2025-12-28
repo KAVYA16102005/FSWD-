@@ -1,1 +1,62 @@
+import React, { useState } from "react";
+
+export default function RealTimePolling() {
+  const [pollOptions, setPollOptions] = useState({
+    Excellent: 0,
+    Good: 0,
+    Average: 0,
+    Poor: 0,
+  });
+
+  const handleVote = (option) => {
+    setPollOptions((prev) => ({
+      ...prev,
+      [option]: prev[option] + 1,
+    }));
+  };
+
+  const totalVotes = Object.values(pollOptions).reduce(
+    (sum, val) => sum + val,
+    0
+  );
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+      <div className="bg-white shadow-xl rounded-2xl p-6 w-full max-w-md">
+        <h1 className="text-2xl font-bold text-center mb-4">
+          📊 Classroom Live Poll
+        </h1>
+
+        <p className="text-center mb-4 text-gray-600">
+          How well did you understand today’s lesson?
+        </p>
+
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          {Object.keys(pollOptions).map((option) => (
+            <button
+              key={option}
+              onClick={() => handleVote(option)}
+              className="bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+
+        <div className="space-y-2">
+          {Object.entries(pollOptions).map(([key, value]) => (
+            <div key={key} className="flex justify-between">
+              <span>{key}</span>
+              <span className="font-semibold">{value} votes</span>
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-4 text-sm text-gray-500 text-center">
+          Total Responses: {totalVotes}
+        </p>
+      </div>
+    </div>
+  );
+}
 
