@@ -1,0 +1,78 @@
+import React from "react";
+
+function App() {
+  const bookCab = () => {
+    const name = prompt("Enter your name:");
+    if (!name) return alert("Booking cancelled!");
+
+    const pickup = prompt("Enter pickup location (Chennai / Bangalore / Hyderabad / Mysore):");
+    const drop = prompt("Enter drop location (Chennai / Bangalore / Hyderabad / Mysore):");
+
+    if (!pickup || !drop) {
+      alert("Invalid locations!");
+      return;
+    }
+
+    // Distance database (automatic calculation)
+    const distances = {
+      "Chennai-Bangalore": 350,
+      "Bangalore-Chennai": 350,
+      "Chennai-Hyderabad": 630,
+      "Hyderabad-Chennai": 630,
+      "Bangalore-Hyderabad": 570,
+      "Hyderabad-Bangalore": 570,
+      "Bangalore-Mysore": 145,
+      "Mysore-Bangalore": 145
+    };
+
+    const routeKey = `${pickup}-${drop}`;
+    const distance = distances[routeKey];
+
+    if (!distance) {
+      alert("Distance not available for selected route!");
+      return;
+    }
+
+    const cabType = prompt("Select cab type (Mini / Sedan / SUV):");
+
+    let ratePerKm = 0;
+    if (cabType?.toLowerCase() === "mini") ratePerKm = 10;
+    else if (cabType?.toLowerCase() === "sedan") ratePerKm = 15;
+    else if (cabType?.toLowerCase() === "suv") ratePerKm = 20;
+    else {
+      alert("Invalid cab type!");
+      return;
+    }
+
+    // Automatic fare calculation
+    const totalFare = distance * ratePerKm;
+
+    const confirmBooking = confirm(
+      `Cab Booking Details\n\n` +
+      `Name: ${name}\n` +
+      `From: ${pickup}\n` +
+      `To: ${drop}\n` +
+      `Distance: ${distance} km\n` +
+      `Cab Type: ${cabType}\n` +
+      `Total Fare: ₹${totalFare}\n\n` +
+      `Confirm booking?`
+    );
+
+    if (confirmBooking) {
+      alert("Booking Successful!\nDriver will arrive shortly.");
+    } else {
+      alert("Booking Cancelled.");
+    }
+  };
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "60px" }}>
+      <h1>Online Cab Booking Application</h1>
+      <button onClick={bookCab} style={{ padding: "12px 24px", fontSize: "16px" }}>
+        Book Cab
+      </button>
+    </div>
+  );
+}
+
+export default App;
