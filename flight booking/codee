@@ -1,0 +1,46 @@
+import React from "react";
+
+function App() {
+  const bookRoom = () => {
+    const name = prompt("Enter your name:");
+    if (!name) {
+      alert("Booking cancelled!");
+      return;
+    }
+
+    const roomType = prompt("Enter room type (Single / Double / Suite):");
+    if (!roomType) {
+      alert("Booking cancelled!");
+      return;
+    }
+
+    const nights = prompt("Enter number of nights:");
+    if (!nights || isNaN(nights)) {
+      alert("Invalid number of nights!");
+      return;
+    }
+
+    const confirmBooking = confirm(
+      `Confirm your booking:\n\nName: ${name}\nRoom: ${roomType}\nNights: ${nights}`
+    );
+
+    if (confirmBooking) {
+      alert(
+        `✅ Booking Successful!\n\nThank you ${name}.\nYour ${roomType} room is booked for ${nights} nights.`
+      );
+    } else {
+      alert("❌ Booking not confirmed.");
+    }
+  };
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "60px" }}>
+      <h1>Hotel Reservation System</h1>
+      <button onClick={bookRoom} style={{ padding: "10px 20px" }}>
+        Book Room
+      </button>
+    </div>
+  );
+}
+
+export default App;
