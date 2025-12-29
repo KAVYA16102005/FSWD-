@@ -1,0 +1,85 @@
+import React, { useState } from "react";
+
+export default function BasicAuthSystem() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Dummy credentials
+  const validUser = "admin";
+  const validPass = "12345";
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    if (!username || !password) {
+      alert("❌ Username and Password are required!");
+      return;
+    }
+
+    if (username === validUser && password === validPass) {
+      alert("✅ Login Successful!");
+      setIsLoggedIn(true);
+    } else {
+      alert("❌ Invalid username or password");
+    }
+  };
+
+  const handleLogout = () => {
+    alert("You have been logged out.");
+    setIsLoggedIn(false);
+    setUsername("");
+    setPassword("");
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+      <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-sm">
+        {!isLoggedIn ? (
+          <>
+            <h1 className="text-2xl font-bold text-center mb-4">
+              🔐 Login System
+            </h1>
+
+            <form onSubmit={handleLogin} className="space-y-3">
+              <input
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full border p-2 rounded"
+              />
+
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full border p-2 rounded"
+              />
+
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+              >
+                Login
+              </button>
+            </form>
+          </>
+        ) : (
+          <div className="text-center">
+            <h2 className="text-xl font-semibold mb-3">Welcome, {username} 🎉</h2>
+            <p className="mb-4">You are successfully authenticated.</p>
+
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+            >
+              Logout
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
