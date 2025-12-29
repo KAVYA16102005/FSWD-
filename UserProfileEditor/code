@@ -1,0 +1,119 @@
+import React, { useState } from "react";
+
+export default function UserProfileEditor() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    age: "",
+  });
+
+  const [errors, setErrors] = useState({});
+  const [savedProfile, setSavedProfile] = useState(null);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const validate = () => {
+    let newErrors = {};
+
+    if (!form.name.trim()) newErrors.name = "Name is required";
+
+    if (!form.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      newErrors.email = "Invalid email format";
+    }
+
+    if (!form.age) {
+      newErrors.age = "Age is required";
+    } else if (isNaN(form.age) || form.age <= 0) {
+      newErrors.age = "Age must be a valid number";
+    }
+
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const validationErrors = validate();
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      setSavedProfile(form);
+      alert("Profile updated successfully!");
+      setForm({ name: "", email: "", age: "" });
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+      <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-md">
+        <h1 className="text-2xl font-bold mb-4 text-center">
+          👤 Edit User Profile
+        </h1>
+
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <div>
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              value={form.name}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+            />
+            {errors.name && (
+              <p className="text-red-600 text-sm">{errors.name}</p>
+            )}
+          </div>
+
+          <div>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              value={form.email}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+            />
+            {errors.email && (
+              <p className="text-red-600 text-sm">{errors.email}</p>
+            )}
+          </div>
+
+          <div>
+            <input
+              type="number"
+              name="age"
+              placeholder="Age"
+              value={form.age}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+            />
+            {errors.age && (
+              <p className="text-red-600 text-sm">{errors.age}</p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+          >
+            Save Profile
+          </button>
+        </form>
+
+        {savedProfile && (
+          <div className="mt-6 p-4 border rounded bg-gray-50">
+            <h2 className="font-semibold mb-2">Saved Profile</h2>
+            <p><strong>Name:</strong> {savedProfile.name}</p>
+            <p><strong>Email:</strong> {savedProfile.email}</p>
+            <p><strong>Age:</strong> {savedProfile.age}</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
