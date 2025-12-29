@@ -1,0 +1,110 @@
+import React, { useState } from "react";
+
+export default function StudentDashboard() {
+  const [activePage, setActivePage] = useState("dashboard");
+
+  const students = [
+    { id: 1, name: "Arun Kumar", course: "Computer Science", year: 2 },
+    { id: 2, name: "Priya Sharma", course: "Information Technology", year: 3 },
+    { id: 3, name: "Rahul Verma", course: "Electronics", year: 1 },
+    { id: 4, name: "Sneha Patel", course: "Mechanical", year: 4 },
+  ];
+
+  return (
+    <div className="min-h-screen flex bg-gray-100">
+      {/* Sidebar Navigation */}
+      <aside className="w-64 bg-blue-700 text-white p-5">
+        <h2 className="text-2xl font-bold mb-6">🎓 Student Panel</h2>
+        <nav className="space-y-3">
+          <button
+            onClick={() => setActivePage("dashboard")}
+            className={`block w-full text-left px-3 py-2 rounded ${
+              activePage === "dashboard" ? "bg-blue-900" : "hover:bg-blue-600"
+            }`}
+          >
+            Dashboard
+          </button>
+          <button
+            onClick={() => setActivePage("students")}
+            className={`block w-full text-left px-3 py-2 rounded ${
+              activePage === "students" ? "bg-blue-900" : "hover:bg-blue-600"
+            }`}
+          >
+            Students List
+          </button>
+          <button
+            onClick={() => setActivePage("about")}
+            className={`block w-full text-left px-3 py-2 rounded ${
+              activePage === "about" ? "bg-blue-900" : "hover:bg-blue-600"
+            }`}
+          >
+            About
+          </button>
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 p-6">
+        {activePage === "dashboard" && (
+          <div>
+            <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="bg-white p-4 rounded shadow">
+                <h3 className="text-lg font-semibold">Total Students</h3>
+                <p className="text-2xl font-bold mt-2">{students.length}</p>
+              </div>
+              <div className="bg-white p-4 rounded shadow">
+                <h3 className="text-lg font-semibold">Courses</h3>
+                <p className="text-2xl font-bold mt-2">4</p>
+              </div>
+              <div className="bg-white p-4 rounded shadow">
+                <h3 className="text-lg font-semibold">Active Year</h3>
+                <p className="text-2xl font-bold mt-2">2025</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activePage === "students" && (
+          <div>
+            <h1 className="text-3xl font-bold mb-4">Student List</h1>
+            <div className="overflow-x-auto bg-white rounded shadow">
+              <table className="w-full border-collapse">
+                <thead className="bg-gray-200">
+                  <tr>
+                    <th className="p-2 text-left">ID</th>
+                    <th className="p-2 text-left">Name</th>
+                    <th className="p-2 text-left">Course</th>
+                    <th className="p-2 text-left">Year</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {students.map((s) => (
+                    <tr key={s.id} className="border-t">
+                      <td className="p-2">{s.id}</td>
+                      <td className="p-2">{s.name}</td>
+                      <td className="p-2">{s.course}</td>
+                      <td className="p-2">{s.year}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {activePage === "about" && (
+          <div>
+            <h1 className="text-3xl font-bold mb-4">About</h1>
+            <p className="text-gray-700 leading-relaxed">
+              This Student Management Dashboard is a simple React-based interface
+              that demonstrates navigation, data display, and dashboard layout.
+              It is suitable for academic mini-projects and learning component-
+              based UI design.
+            </p>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
