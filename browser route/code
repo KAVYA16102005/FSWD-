@@ -1,0 +1,56 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link, useParams } from "react-router-dom";
+
+const products = {
+  electronics: ["Laptop", "Mobile", "Headphones"],
+  fashion: ["T-Shirt", "Jeans", "Shoes"],
+  books: ["React Guide", "JavaScript Basics", "CSS Mastery"]
+};
+
+function Home() {
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2>Product Categories</h2>
+
+      <ul>
+        <li><Link to="/category/electronics">Electronics</Link></li>
+        <li><Link to="/category/fashion">Fashion</Link></li>
+        <li><Link to="/category/books">Books</Link></li>
+      </ul>
+    </div>
+  );
+}
+
+function CategoryPage() {
+  const { name } = useParams();
+  const items = products[name] || [];
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2>{name.toUpperCase()} Products</h2>
+
+      {items.length === 0 ? (
+        <p>No products available</p>
+      ) : (
+        <ul>
+          {items.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      )}
+
+      <Link to="/">⬅ Back to Categories</Link>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/category/:name" element={<CategoryPage />} />
+      </Routes>
+    </Router>
+  );
+}
