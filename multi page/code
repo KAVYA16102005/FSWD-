@@ -1,0 +1,88 @@
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+
+function Navbar() {
+  return (
+    <nav style={{ padding: "15px", background: "#1f2937", color: "white" }}>
+      <Link style={linkStyle} to="/">Dashboard</Link>
+      <Link style={linkStyle} to="/students">Students</Link>
+      <Link style={linkStyle} to="/courses">Courses</Link>
+      <Link style={linkStyle} to="/profile">Profile</Link>
+    </nav>
+  );
+}
+
+const linkStyle = {
+  marginRight: "15px",
+  color: "white",
+  textDecoration: "none",
+  fontWeight: "bold"
+};
+
+function Dashboard() {
+  return (
+    <div style={pageStyle}>
+      <h2>Student Dashboard</h2>
+      <p>Welcome to the student management system.</p>
+    </div>
+  );
+}
+
+function Students() {
+  const students = ["Arun", "Priya", "Karthik", "Meena"];
+
+  return (
+    <div style={pageStyle}>
+      <h2>Student List</h2>
+      <ul>
+        {students.map((s, i) => (
+          <li key={i}>{s}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function Courses() {
+  const courses = ["React", "Node.js", "Python", "Data Science"];
+
+  return (
+    <div style={pageStyle}>
+      <h2>Courses</h2>
+      <ul>
+        {courses.map((c, i) => (
+          <li key={i}>{c}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function Profile() {
+  return (
+    <div style={pageStyle}>
+      <h2>Student Profile</h2>
+      <p>Name: John Doe</p>
+      <p>Department: Computer Science</p>
+      <p>Email: john@example.com</p>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/students" element={<Students />} />
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </Router>
+  );
+}
+
+const pageStyle = {
+  padding: "20px"
+};
