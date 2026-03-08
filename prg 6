@@ -1,3 +1,15 @@
+(in cmd )
+mkdir restapi
+cd restapi
+npm init -y
+npm install express
+
+(in vs )
+server.js -create a file adnd paste code 
+node server.js - run in cmd in vs
+http://localhost:3000/students - open this in chrome
+
+
 const express = require("express");
 const app = express();
 
