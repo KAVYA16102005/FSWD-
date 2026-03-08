@@ -1,0 +1,54 @@
+import React, { useState } from "react";
+
+function App() {
+
+const [page, setPage] = useState("dashboard");
+
+return (
+<div style={{display:"flex", height:"100vh"}}>
+
+<div style={{width:"200px", background:"#2c3e50", color:"white", padding:"20px"}}>
+<h2>Student Panel</h2>
+
+<button onClick={()=>setPage("dashboard")}>Dashboard</button><br/><br/>
+<button onClick={()=>setPage("students")}>Students</button><br/><br/>
+<button onClick={()=>setPage("profile")}>Profile</button>
+
+</div>
+
+<div style={{flex:1, padding:"20px"}}>
+
+{page==="dashboard" && (
+<div>
+<h1>Dashboard</h1>
+<p>Welcome to Student Dashboard</p>
+</div>
+)}
+
+{page==="students" && (
+<div>
+<h1>Students List</h1>
+<ul>
+<li>Rahul</li>
+<li>Anita</li>
+<li>Arjun</li>
+</ul>
+</div>
+)}
+
+{page==="profile" && (
+<div>
+<h1>Student Profile</h1>
+<p>Name: Rahul</p>
+<p>Department: CSE</p>
+<p>Year: 3rd Year</p>
+</div>
+)}
+
+</div>
+
+</div>
+);
+}
+
+export default App;
