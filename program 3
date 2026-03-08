@@ -1,0 +1,108 @@
+import React, { useState } from "react";
+
+function InternshipApplication() {
+
+const [formData,setFormData] = useState({
+name:"",
+email:"",
+mobile:"",
+college:"",
+cgpa:"",
+domain:"",
+resume:null,
+agree:false
+});
+
+const [message,setMessage] = useState("");
+
+const handleChange = (e)=>{
+const {name,value,type,checked,files} = e.target;
+
+setFormData({
+...formData,
+[name]: type === "checkbox" ? checked :
+type === "file" ? files[0] :
+value
+});
+};
+
+const handleSubmit = (e)=>{
+e.preventDefault();
+
+if(
+formData.name==="" ||
+formData.email==="" ||
+formData.mobile==="" ||
+formData.college==="" ||
+formData.cgpa==="" ||
+formData.domain==="" ||
+!formData.resume ||
+!formData.agree
+){
+setMessage("Please fill all fields correctly");
+}
+else{
+setMessage("Application Submitted Successfully");
+}
+};
+
+return(
+
+<div>
+
+<h2>Internship Application Form</h2>
+
+<form onSubmit={handleSubmit}>
+
+Name:
+<input type="text" name="name" onChange={handleChange}/>
+<br/><br/>
+
+Email:
+<input type="email" name="email" onChange={handleChange}/>
+<br/><br/>
+
+Mobile:
+<input type="number" name="mobile" onChange={handleChange}/>
+<br/><br/>
+
+College:
+<input type="text" name="college" onChange={handleChange}/>
+<br/><br/>
+
+CGPA:
+<input type="number" step="0.01" name="cgpa" onChange={handleChange}/>
+<br/><br/>
+
+Preferred Domain:
+<select name="domain" onChange={handleChange}>
+<option value="">Select</option>
+<option value="Web Development">Web Development</option>
+<option value="AI">Artificial Intelligence</option>
+<option value="Data Science">Data Science</option>
+</select>
+
+<br/><br/>
+
+Upload Resume:
+<input type="file" name="resume" onChange={handleChange}/>
+<br/><br/>
+
+<input type="checkbox" name="agree" onChange={handleChange}/>
+I agree to the terms and conditions
+
+<br/><br/>
+
+<button type="submit">Submit</button>
+
+</form>
+
+<p>{message}</p>
+
+</div>
+
+);
+
+}
+
+export default InternshipApplication;
