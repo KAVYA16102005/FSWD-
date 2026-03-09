@@ -1,29 +1,8 @@
-(in cmd )
-mkdir restapi
-cd restapi
-npm init -y
-npm install express
-
-(in vs )
-server.js -create a file adnd paste code 
-node server.js - run in cmd in vs
-http://localhost:3000/students - open this in chrome
-
-
-const express = require("express");
-const app = express();
-
-app.use(express.json());
-
-let students = [
- {id:1,name:"Rahul",course:"CSE"},
- {id:2,name:"Anita",course:"IT"}
-];
-
-app.get("/students",(req,res)=>{
- res.json(students);
-});
-
-app.listen(3000,()=>{
- console.log("Server running on port 3000");
-});
+create a folder then go to cmd
+npm init @angular myapp
+choose css
+then choose none
+w3 schoool (anugular steup)
+npm install -g @angular/cli - paste this in the vs
+app.html
+app.ts
